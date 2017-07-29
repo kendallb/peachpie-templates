@@ -15,7 +15,8 @@ $error = 0;
 foreach($template in $templates){
     Remove-Item "./*" -Recurse -Force
 
-    dotnet new $template.Name
+    dotnet new $template.Name -n tst-tst
+    cd tst-tst
     if(!($?)) { $error += 1; continue }
     dotnet restore 
     if(!($?)) { $error += 1; continue }
@@ -25,6 +26,7 @@ foreach($template in $templates){
 
 # remove tmp folder
 Set-Location "$PSScriptRoot/.."
-Remove-Item "./tmp" -Force -Recurse
+# Remove-Item "./tmp" -Force -Recurse
 
+Write-Output "Number of errored templates: $error"
 exit $error
